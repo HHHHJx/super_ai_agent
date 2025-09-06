@@ -8,6 +8,9 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 终端操作
+ */
 public class TerminalOperationTool {
 
     @Tool(description = "Execute a command in the terminal")

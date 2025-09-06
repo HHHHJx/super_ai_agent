@@ -13,6 +13,9 @@ import org.springframework.ai.tool.annotation.ToolParam;
 
 import java.io.IOException;
 
+/**
+ * 根据标题和内容生成PDF文件。
+ */
 public class PDFGenerationTool {
 
     @Tool(description = "Generate a PDF file with given content")

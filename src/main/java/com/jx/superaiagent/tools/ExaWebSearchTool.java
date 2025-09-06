@@ -107,7 +107,7 @@ public class ExaWebSearchTool {
                         resultBuilder.append("摘要：").append(snippet.substring(0, Math.min(snippet.length(), 200))).append("...\n"); // 截取前200字符，避免过长
                         resultBuilder.append("-------------------------\n");
                     }
-
+                    log.info("联网搜索结果为：{}", resultBuilder.toString());
                     return resultBuilder.toString();
                 } else {
                     return "未找到与「" + searchQuery + "」相关的结果";

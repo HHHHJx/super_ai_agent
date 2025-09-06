@@ -90,7 +90,12 @@
             <version>9.1.0</version>
             <scope>test</scope>
         </dependency>
-
+        <!-- victools JSON Schema 生成器：Spring AI 工具调用依赖 -->
+        <dependency>
+            <groupId>com.github.victools</groupId>
+            <artifactId>jsonschema-generator</artifactId>
+            <version>4.38.0</version> <!-- 包含 DRAFT_2020_12 字段的最新版本 -->
+        </dependency>
     </dependencies>
 
     <repositories>

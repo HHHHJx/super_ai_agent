@@ -13,6 +13,7 @@ import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.chat.memory.InMemoryChatMemory;
 import org.springframework.ai.chat.model.ChatResponse;
 
+import org.springframework.ai.tool.ToolCallback;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.stereotype.Component;
 
@@ -38,7 +39,6 @@ public class LoveApp {
                         new MessageChatMemoryAdvisor(chatMemory)
                 )
                 .build();
-
     }
 
     // 测试多轮对话的记忆效果。
@@ -51,10 +51,11 @@ public class LoveApp {
                 .call()
                 .chatResponse();
         String content = response.getResult().getOutput().getText();
-        log.info("content: {}", content);
+//        log.info("content: {}", content);
         return content;
     }
 
+    // 使用本地rag增强AI对话。
     @Resource // 按名称注入
     private VectorStore loveAppVectorStore;
 
@@ -71,10 +72,11 @@ public class LoveApp {
                 .call()
                 .chatResponse();
         String content = chatResponse.getResult().getOutput().getText();
-        log.info("content: {}", content);
+//        log.info("content: {}", content);
         return content;
     }
 
+    // 使用云rag增强AI对话。
     @Resource
     private Advisor loveAppRagCloudAdvisor;
 
@@ -91,9 +93,30 @@ public class LoveApp {
                 .call()
                 .chatResponse();
         String content = chatResponse.getResult().getOutput().getText();
-        log.info("content: {}", content);
+//        log.info("content: {}", content);
         return content;
     }
+
+    // 附加调用工具的能力进行AI对话。
+    @Resource
+    private ToolCallback[] allTools;
+
+    public String doChatWithTools(String message, String chatId) {
+        ChatResponse response = chatClient
+                .prompt()
+                .user(message)
+                .advisors(spec -> spec.param(CHAT_MEMORY_CONVERSATION_ID_KEY, chatId)
+                        .param(CHAT_MEMORY_RETRIEVE_SIZE_KEY, 10))
+                // 开启日志，便于观察效果
+                .advisors(new MyLoggerAdvisor())
+                .tools(allTools)
+                .call()
+                .chatResponse();
+        String content = response.getResult().getOutput().getText();
+//        log.info("content: {}", content);
+        return content;
+    }
+
 
 
 
