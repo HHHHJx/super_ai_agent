@@ -9,6 +9,11 @@ spring:
       chat:
         options:
           model: qwen-plus
+    mcp:
+      client:
+        stdio:
+          servers-configuration: classpath:mcp-servers.json # 内含mcp的key，属于敏感信息，不会上传到GitHub仓库。
+          request-timeout: 60s
 server:
   port: 8123
   servlet:
